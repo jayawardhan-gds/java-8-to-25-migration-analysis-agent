@@ -1,0 +1,27 @@
+# Java Migration Analysis Report
+
+- **Target:** {{ target }}
+- **Generated:** {{ generated_at }}
+- **Risk score:** {{ risk_score }}/100
+- **Findings:** Critical {{ summary.Critical }}, High {{ summary.High }}, Medium {{ summary.Medium }}, Low {{ summary.Low }}, Informational {{ summary.Informational }}
+
+## Tool execution
+{% for tool in tools %}- **{{ tool.name }}:** {{ tool.status }} — {{ tool.detail }}
+{% endfor %}
+
+## Findings
+{% for f in findings %}
+### {{ f.severity }} — {{ f.rule_id }} — {{ f.title }}
+- Category: {{ f.category }}
+- Location: {{ f.file or 'project' }}{% if f.line %}:{{ f.line }}{% endif %}
+- Evidence: `{{ f.evidence or 'See tool output' }}`
+- Explanation: {{ f.explanation }}
+- Recommendation: {{ f.recommendation }}
+{% endfor %}
+
+## Phased roadmap
+1. Establish a clean Java 8 build and strengthen characterization tests.
+2. Upgrade Maven plugins and dependencies using vendor-supported versions.
+3. Remove internal/deprecated JDK APIs and legacy Java EE assumptions.
+4. Move through an intermediate LTS JDK, rerunning build, tests, jdeps and jdeprscan.
+5. Set `maven.compiler.release` to 25, execute the complete validation suite, and complete human architecture/security review.
