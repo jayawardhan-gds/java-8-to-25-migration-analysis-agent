@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "java-migration-analysis-agent"
+version = "0.1.0"
+description = "Local-first Java 8 to Java 25 migration analysis agent"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["typer>=0.12,<1", "jinja2>=3.1,<4", "pyyaml>=6,<7"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<9", "ruff>=0.7,<1", "mypy>=1.11,<2"]
+
+[project.scripts]
+java-migration-agent = "analysis_agent.cli:app"
+
+[tool.setuptools.packages.find]
+include = ["analysis_agent*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+ignore = ["B008"]

@@ -1,0 +1,29 @@
+rules:
+  - id: SRC-001
+    severity: High
+    category: Removed/module concerns
+    title: Internal JDK API usage
+    pattern: '(^|[^A-Za-z0-9_])(sun\.|com\.sun\.)'
+    explanation: Internal JDK packages are unsupported and strongly encapsulated in modern Java.
+    recommendation: Replace the internal API with a supported Java SE or maintained library API.
+  - id: SRC-002
+    severity: High
+    category: Removed/module concerns
+    title: Legacy JAXB/Java EE import
+    pattern: 'import\s+javax\.(xml\.bind|activation|annotation)'
+    explanation: Several Java EE modules were removed from the JDK after Java 8.
+    recommendation: Add a supported explicit dependency and complete any javax-to-jakarta migration required by the selected framework.
+  - id: SRC-003
+    severity: Medium
+    category: Code modernization
+    title: Legacy Date or Calendar usage
+    pattern: '\b(new\s+Date\s*\(|Calendar\.getInstance\s*\()'
+    explanation: Legacy date/time APIs are mutable and error-prone.
+    recommendation: Consider java.time types after behavior is covered by tests.
+  - id: SRC-004
+    severity: Medium
+    category: Code modernization
+    title: Vector or Hashtable usage
+    pattern: '\b(Vector|Hashtable)\s*<'
+    explanation: Legacy synchronized collections may obscure concurrency intent.
+    recommendation: Review concurrency requirements and prefer modern collections where appropriate.
